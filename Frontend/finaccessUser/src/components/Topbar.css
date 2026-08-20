@@ -1,0 +1,53 @@
+.c-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: white;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.c-topbar h1 {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.c-topbar-subtitle {
+  color: var(--c-text-muted);
+  font-size: 0.85rem;
+  margin: 0.2rem 0 0 0;
+}
+
+.c-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.c-topbar-icon-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--c-text-muted);
+  cursor: pointer;
+}
+
+.c-topbar-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.c-topbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,98 @@
+.repayments-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .repayments-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.credit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.credit-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.credit-item:hover {
+  border-color: var(--admin-accent);
+}
+
+.credit-item.selected {
+  border-color: var(--admin-accent);
+  background: var(--admin-blue-bg);
+}
+
+.credit-item p {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.82rem;
+  color: var(--admin-text-muted);
+}
+
+.credit-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 0.8rem 0 1rem 0;
+}
+
+.credit-summary p {
+  margin: 0.2rem 0 0 0;
+  font-weight: 600;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--admin-border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--admin-green-text);
+}
+
+.progress-label {
+  font-size: 0.78rem;
+  color: var(--admin-text-muted);
+  margin: 0.3rem 0 1.2rem 0;
+}
+
+.repayment-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.repayment-form label {
+  font-size: 0.82rem;
+  color: var(--admin-text-muted);
+  margin-top: 0.7rem;
+  margin-bottom: 0.25rem;
+}
+
+.repayment-form input,
+.repayment-form select,
+.repayment-form textarea {
+  padding: 0.55rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.repayment-form button {
+  margin-top: 1.3rem;
+}

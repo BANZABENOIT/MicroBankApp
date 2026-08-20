@@ -1,0 +1,16 @@
+.c-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.c-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.c-main {
+  padding: 1.5rem 2rem;
+  flex: 1;
+}

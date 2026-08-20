@@ -1,0 +1,93 @@
+.tabs-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  color: var(--admin-text-muted);
+  font-size: 0.88rem;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn.active {
+  color: var(--admin-accent);
+  border-bottom-color: var(--admin-accent);
+  font-weight: 600;
+}
+
+.request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.request-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 0.8fr 1fr 1fr auto;
+  align-items: center;
+  gap: 1rem;
+}
+
+.request-client {
+  color: var(--admin-text-muted);
+  font-size: 0.82rem;
+  margin: 0.2rem 0 0 0;
+}
+
+.request-label {
+  color: var(--admin-text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.request-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.status-pending { background: var(--admin-amber-bg); color: var(--admin-amber-text); }
+.status-approved { background: var(--admin-green-bg); color: var(--admin-green-text); }
+.status-rejected { background: var(--admin-red-bg); color: var(--admin-red-text); }
+
+.request-actions {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.icon-approve:hover { color: var(--admin-green-text); }
+.icon-reject:hover { color: var(--admin-red-text); }
+
+.request-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.request-detail-grid h4 {
+  margin: 0 0 0.6rem 0;
+  font-size: 0.85rem;
+  color: var(--admin-text-muted);
+  text-transform: uppercase;
+}
+
+.request-detail-grid p {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.request-detail-buttons {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: flex-end;
+}

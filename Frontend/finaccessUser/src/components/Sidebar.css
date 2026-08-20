@@ -1,0 +1,81 @@
+.c-sidebar {
+  width: 240px;
+  background: var(--c-sidebar-bg);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem 0.8rem;
+  flex-shrink: 0;
+}
+
+.c-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.4rem;
+}
+
+.c-sidebar-logo {
+  background: var(--c-accent);
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.c-sidebar-section-label {
+  color: #94a3b8;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  margin: 1.2rem 0.4rem 0.5rem;
+}
+
+.c-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+}
+
+.c-sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 8px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+
+.c-sidebar-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.c-sidebar-link.active {
+  background: var(--c-accent);
+  color: white;
+}
+
+.c-sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 8px;
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  font-size: 0.88rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.c-sidebar-logout:hover {
+  background: rgba(255, 255, 255, 0.06);
+}

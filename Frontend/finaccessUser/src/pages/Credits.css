@@ -1,0 +1,108 @@
+.credits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.credit-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.credit-ref {
+  font-size: 1.05rem;
+}
+
+.credit-row-fields {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+@media (max-width: 700px) {
+  .credit-row-fields {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.request-label {
+  color: var(--c-text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.credit-row-fields p {
+  margin: 0.15rem 0 0 0;
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.credits-new-btn {
+  width: 100%;
+}
+
+.status-pending, .status-en_attente { background: var(--c-amber-bg); color: var(--c-amber-text); }
+.status-approved, .status-repaying { background: var(--c-blue-bg); color: var(--c-blue-text); }
+.status-completed { background: var(--c-green-bg); color: var(--c-green-text); }
+.status-rejected { background: var(--c-red-bg); color: var(--c-red-text); }
+
+.progress-bar {
+  height: 7px;
+  background: var(--c-border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 0.8rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--c-green-text);
+}
+
+.credit-request-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.credit-request-form label {
+  font-size: 0.82rem;
+  color: var(--c-text-muted);
+  margin-top: 0.7rem;
+  margin-bottom: 0.25rem;
+}
+
+.credit-request-form input,
+.credit-request-form textarea {
+  padding: 0.55rem;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.credit-request-form button {
+  margin-top: 1.3rem;
+}
+
+.credit-form-note {
+  background: var(--c-blue-bg);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.credit-form-note strong {
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.credit-form-note ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--c-text-muted);
+}

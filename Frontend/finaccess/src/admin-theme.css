@@ -1,0 +1,132 @@
+:root {
+  --admin-sidebar-bg: #0e1a3a;
+  --admin-sidebar-hover: #16264f;
+  --admin-accent: #2f6fed;
+  --admin-accent-hover: #2557c7;
+  --admin-bg: #f4f6fb;
+  --admin-card-bg: #ffffff;
+  --admin-text: #1e293b;
+  --admin-text-muted: #64748b;
+  --admin-border: #e5e7eb;
+
+  --admin-green-bg: #dcfce7;
+  --admin-green-text: #16a34a;
+  --admin-red-bg: #fee2e2;
+  --admin-red-text: #dc2626;
+  --admin-amber-bg: #fef3c7;
+  --admin-amber-text: #b45309;
+  --admin-blue-bg: #dbeafe;
+  --admin-blue-text: #1e40af;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--admin-text);
+  margin: 0;
+  background-color: var(--admin-bg);
+}
+
+.admin-card {
+  background: var(--admin-card-bg);
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  padding: 1.25rem;
+}
+
+.admin-page-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem 0;
+}
+
+.admin-page-subtitle {
+  color: var(--admin-text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 1.2rem 0;
+}
+
+.admin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: none;
+  border-radius: 8px;
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-btn-primary {
+  background: var(--admin-accent);
+  color: white;
+}
+.admin-btn-primary:hover {
+  background: var(--admin-accent-hover);
+}
+
+.admin-btn-outline {
+  background: white;
+  color: var(--admin-text);
+  border: 1px solid var(--admin-border);
+}
+
+.admin-btn-danger {
+  background: var(--admin-red-text);
+  color: white;
+}
+
+.admin-btn-success {
+  background: var(--admin-green-text);
+  color: white;
+}
+
+.admin-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: left;
+  font-size: 0.78rem;
+  color: var(--admin-text-muted);
+  text-transform: uppercase;
+  padding: 0.7rem 0.6rem;
+  border-bottom: 1px solid var(--admin-border);
+}
+
+.admin-table td {
+  padding: 0.7rem 0.6rem;
+  border-bottom: 1px solid var(--admin-border);
+  font-size: 0.9rem;
+}
+
+.admin-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  color: var(--admin-text-muted);
+}
+
+.admin-search input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 0.88rem;
+}

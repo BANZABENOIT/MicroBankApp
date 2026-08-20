@@ -1,0 +1,82 @@
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-grid h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.dashboard-empty {
+  color: var(--c-text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.tx-list {
+  list-style: none;
+  margin: 0 0 0.8rem 0;
+  padding: 0;
+}
+
+.tx-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.tx-list li:last-child {
+  border-bottom: none;
+}
+
+.tx-date {
+  color: var(--c-text-muted);
+  font-size: 0.78rem;
+  display: block;
+}
+
+.tx-label {
+  font-size: 0.9rem;
+}
+
+.tx-amount-positive {
+  color: var(--c-green-text);
+  font-weight: 600;
+}
+
+.tx-amount-negative {
+  color: var(--c-red-text);
+  font-weight: 600;
+}
+
+.cta-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #eff6ff;
+}
+
+.cta-card p {
+  margin: 0.2rem 0 0 0;
+  color: var(--c-text-muted);
+  font-size: 0.88rem;
+}

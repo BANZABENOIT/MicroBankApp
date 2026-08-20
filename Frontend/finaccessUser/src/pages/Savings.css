@@ -1,0 +1,39 @@
+.savings-balance-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.savings-balance-card h2 {
+  margin: 0.2rem 0 0 0;
+  font-size: 1.8rem;
+}
+
+.savings-history-list {
+  list-style: none;
+  margin: 0 0 0.8rem 0;
+  padding: 0;
+}
+
+.savings-history-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.savings-history-list li:last-child {
+  border-bottom: none;
+}
+
+.savings-history-list li > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.savings-history-list .tx-label {
+  font-size: 0.9rem;
+  margin-top: 0.15rem;
+}

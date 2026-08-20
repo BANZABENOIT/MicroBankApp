@@ -1,0 +1,108 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--c-bg);
+}
+
+.auth-form {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-logo {
+  background: var(--c-accent);
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.auth-form-wide {
+  max-width: 440px;
+}
+
+.auth-row {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.auth-row > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form select {
+  padding: 0.6rem;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: white;
+}
+
+.auth-form h2 {
+  margin: 0 0 1.2rem 0;
+  color: var(--c-text);
+}
+
+.auth-form label {
+  font-size: 0.85rem;
+  margin-top: 0.8rem;
+  margin-bottom: 0.3rem;
+  color: #374151;
+}
+
+.auth-form input {
+  padding: 0.6rem;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.auth-form button {
+  margin-top: 1.5rem;
+  padding: 0.7rem;
+  background-color: var(--c-accent);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.auth-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.auth-form p {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.auth-form a {
+  color: var(--c-accent);
+}

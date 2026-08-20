@@ -1,0 +1,42 @@
+.donut-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.donut-svg {
+  width: 130px;
+  height: 130px;
+}
+
+.donut-center-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  fill: var(--c-text);
+}
+
+.donut-center-label {
+  font-size: 0.7rem;
+  fill: var(--c-text-muted);
+}
+
+.donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.donut-legend-item {
+  font-size: 0.85rem;
+  color: var(--c-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.donut-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}

@@ -1,0 +1,43 @@
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.detail-header h2 {
+  margin: 0;
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.detail-info-grid p {
+  margin: 0.2rem 0 0 0;
+  font-weight: 600;
+}
+
+.progress-label {
+  font-size: 0.8rem;
+  color: var(--c-text-muted);
+  margin: 0.4rem 0 0 0;
+}
+
+.c-main .c-card + .c-card {
+  margin-top: 1.5rem;
+}
+
+.c-main .c-card h3 {
+  margin: 0 0 1rem 0;
+}

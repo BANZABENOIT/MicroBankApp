@@ -1,0 +1,46 @@
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-search {
+  min-width: 260px;
+}
+
+.table-toolbar-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: var(--admin-text-muted);
+  cursor: pointer;
+  padding: 0.3rem;
+  font-size: 1rem;
+}
+
+.icon-btn:hover {
+  color: var(--admin-accent);
+}
+
+.table-empty {
+  text-align: center;
+  color: var(--admin-text-muted);
+  padding: 2rem 0;
+}
+
+.table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--admin-text-muted);
+}
