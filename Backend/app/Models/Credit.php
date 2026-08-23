@@ -8,12 +8,13 @@ class Credit
 {
     public static function create(int $clientId, int $compteId, float $montantDemande, int $dureeMois, ?string $motif): int
     {
+        $taux = isset($data['interest_rate']) ? (float) $data['interest_rate'] : 5.0;
         $pdo = Database::connect();
         $stmt = $pdo->prepare(
             'INSERT INTO credits (client_id, compte_id, montant_demande, taux_interet, duree_mois, motif, statut, date_demande)
-             VALUES (?, ?, ?, 1500, ?, ?, "en_attente", NOW())'
+             VALUES (?, ?, ?, ?, ?, ?, "en_attente", NOW())'
         );
-        $stmt->execute([$clientId, $compteId, $montantDemande, $dureeMois, $motif]);
+        $stmt->execute([$clientId, $compteId, $montantDemande, $taux, $dureeMois, $motif]);
         return (int) $pdo->lastInsertId();
     }
 
