@@ -63,14 +63,14 @@ function Credits() {
               <div className="credit-row-top">
                 <strong className="credit-ref">{credit.reference}</strong>
                 <span className={`c-badge status-${credit.status}`}>
-                  {STATUS_LABELS[credit.status] || credit.status}
+                  {STATUS_LABELS[credit.status] || credit.statut}
                 </span>
               </div>
 
               <div className="credit-row-fields">
                 <div>
                   <span className="request-label">Montant</span>
-                  <p>{credit.amount?.toLocaleString("fr-FR")} BIF</p>
+                  <p>{credit.amountRequest?.toLocaleString("fr-FR")} BIF</p>
                 </div>
                 <div>
                   <span className="request-label">Durée</span>

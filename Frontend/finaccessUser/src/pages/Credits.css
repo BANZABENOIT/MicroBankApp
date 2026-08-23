@@ -45,10 +45,24 @@
   width: 100%;
 }
 
-.status-pending, .status-en_attente { background: var(--c-amber-bg); color: var(--c-amber-text); }
-.status-approved, .status-repaying { background: var(--c-blue-bg); color: var(--c-blue-text); }
-.status-completed { background: var(--c-green-bg); color: var(--c-green-text); }
-.status-rejected { background: var(--c-red-bg); color: var(--c-red-text); }
+.status-pending,
+.status-en_attente {
+  background: var(--c-amber-bg);
+  color: var(--c-amber-text);
+}
+.status-approved,
+.status-repaying {
+  background: var(--c-blue-bg);
+  color: var(--c-blue-text);
+}
+.status-completed {
+  background: var(--c-green-bg);
+  color: var(--c-green-text);
+}
+.status-rejected {
+  background: var(--c-red-bg);
+  color: var(--c-red-text);
+}
 
 .progress-bar {
   height: 7px;

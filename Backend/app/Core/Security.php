@@ -21,7 +21,7 @@ class Security
         return bin2hex(random_bytes(32));
     }
 
-    // A03:2021  Injection (XSS)
+    // A03:2021  Injection ou XSS
 
     public static function sanitizeString(?string $value): string
     {
@@ -40,7 +40,7 @@ class Security
         return is_numeric($value) && $value > 0;
     }
 
-    // A05:2021 - Mauvaise configuration de sécurité
+    // A05:2021  Mauvaise configuration de sécurité
 
     public static function setSecurityHeaders(): void
     {

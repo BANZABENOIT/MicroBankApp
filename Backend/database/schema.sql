@@ -1,10 +1,7 @@
--- Base de données FinAccess - schéma conforme au diagramme fourni
+
 CREATE DATABASE IF NOT EXISTS finaccess CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE finaccess;
 
--- ==========================================================
--- UTILISATEURS (comptes de connexion, client ou admin)
--- ==========================================================
 CREATE TABLE utilisateurs (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
@@ -19,9 +16,6 @@ CREATE TABLE utilisateurs (
     date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- ==========================================================
--- JETONS D'AUTHENTIFICATION (auth par token Bearer)
--- ==========================================================
 CREATE TABLE api_tokens (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     utilisateur_id INT UNSIGNED NOT NULL,
@@ -31,9 +25,6 @@ CREATE TABLE api_tokens (
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ==========================================================
--- CLIENTS (profil métier, 1-1 avec un utilisateur de rôle client)
--- ==========================================================
 CREATE TABLE clients (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     utilisateur_id INT UNSIGNED NOT NULL UNIQUE,
@@ -45,9 +36,6 @@ CREATE TABLE clients (
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ==========================================================
--- COMPTES (comptes bancaires du client)
--- ==========================================================
 CREATE TABLE comptes (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     client_id INT UNSIGNED NOT NULL,
@@ -59,9 +47,6 @@ CREATE TABLE comptes (
     FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ==========================================================
--- EPARGNES (dépôts / retraits sur l'épargne)
--- ==========================================================
 CREATE TABLE epargnes (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     client_id INT UNSIGNED NOT NULL,
@@ -78,9 +63,6 @@ CREATE TABLE epargnes (
     FOREIGN KEY (compte_id) REFERENCES comptes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ==========================================================
--- CREDITS (demandes et contrats de crédit)
--- ==========================================================
 CREATE TABLE credits (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     client_id INT UNSIGNED NOT NULL,
@@ -98,9 +80,6 @@ CREATE TABLE credits (
     FOREIGN KEY (compte_id) REFERENCES comptes(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ==========================================================
--- REMBOURSEMENTS (paiements effectués sur un crédit)
--- ==========================================================
 CREATE TABLE remboursements (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     credit_id INT UNSIGNED NOT NULL,
@@ -112,9 +91,6 @@ CREATE TABLE remboursements (
     FOREIGN KEY (credit_id) REFERENCES credits(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- ==========================================================
--- TRANSACTIONS (journal global de tous les mouvements)
--- ==========================================================
 CREATE TABLE transactions (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     compte_id INT UNSIGNED NOT NULL,
@@ -125,4 +101,22 @@ CREATE TABLE transactions (
     description TEXT NULL,
     date_transaction DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (compte_id) REFERENCES comptes(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE banque_compte (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    solde DECIMAL(5,2) NOT NULL DEFAULT 0,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE banque_mouvements (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    type ENUM('depot', 'remboursement', 'capital_initial') NOT NULL,
+    montant DECIMAL(15,2) NOT NULL,
+    client_id INT UNSIGNED NULL,
+    credit_id INT UNSIGNED NULL,
+    effectue_par INT NULL COMMENT 'id de l\'agent ou admin qui a réalisé l\'opération',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (client_id) REFERENCES clients(id),
+    FOREIGN KEY (credit_id) REFERENCES credits(id)
 ) ENGINE=InnoDB;

@@ -28,7 +28,7 @@ function Dashboard() {
   const totalCredits = creditsOverview.inProgress + creditsOverview.completed + creditsOverview.pending;
 
   return (
-    <ClientLayout title={`Bonjour, ${user?.name || ""} `} subtitle="Voici un résumé de votre activité">
+    <ClientLayout title={`Bienvenue cher(ère), ${user?.name || ""} `} subtitle="Voici un résumé de votre activité">
       <div className="stats-row">
         <StatCard
           colorClass="blue"
@@ -50,7 +50,7 @@ function Dashboard() {
           value={`${totalSavings?.toLocaleString("fr-FR") || 0} BIF`}
           linkLabel="Voir détails"
           onLinkClick={() => navigate("/savings")}
-        />
+        /> 
         <StatCard
           colorClass="amber"
           label="Paiements à venir"

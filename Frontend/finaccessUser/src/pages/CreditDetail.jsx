@@ -19,7 +19,7 @@ function CreditDetail() {
   }, [dispatch, id]);
 
   const handleRepay = async () => {
-    const result = await dispatch(makeRepayment({ creditId: id, amount: credit.nextInstallmentAmount }));
+    const result = await dispatch(makeRepayment({ creditId: id }));
     if (makeRepayment.fulfilled.match(result)) {
       toast.success("Remboursement effectué !");
       dispatch(fetchCreditDetail(id));

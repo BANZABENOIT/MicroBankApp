@@ -94,11 +94,31 @@ body {
   border-radius: 20px;
 }
 
-/* Statuts génériques utilisés dans plusieurs pages (crédits, comptes, échéances) */
-.status-pending, .status-en_attente, .status-a_payer { background: var(--c-amber-bg); color: var(--c-amber-text); }
-.status-approved, .status-repaying, .status-en_cours { background: var(--c-blue-bg); color: var(--c-blue-text); }
-.status-completed, .status-paid, .status-actif, .status-payé { background: var(--c-green-bg); color: var(--c-green-text); }
-.status-rejected, .status-inactif, .status-bloqué { background: var(--c-red-bg); color: var(--c-red-text); }
+.status-pending,
+.status-en_attente,
+.status-a_payer {
+  background: var(--c-amber-bg);
+  color: var(--c-amber-text);
+}
+.status-approved,
+.status-repaying,
+.status-en_cours {
+  background: var(--c-blue-bg);
+  color: var(--c-blue-text);
+}
+.status-completed,
+.status-paid,
+.status-actif,
+.status-payé {
+  background: var(--c-green-bg);
+  color: var(--c-green-text);
+}
+.status-rejected,
+.status-inactif,
+.status-bloqué {
+  background: var(--c-red-bg);
+  color: var(--c-red-text);
+}
 
 .c-table {
   width: 100%;

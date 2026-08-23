@@ -58,7 +58,7 @@ class Client
     public static function updateProfile(int $clientId, ?string $adresse): void
     {
         $pdo = Database::connect();
-        $stmt = $pdo->prepare('UPDATE clients SET adresse = ? WHERE id = ?');
+        $stmt = $pdo->prepare('UPDATE clients SET adress = ? WHERE id = ?');
         $stmt->execute([$adresse, $clientId]);
     }
 }

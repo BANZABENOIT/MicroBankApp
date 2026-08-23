@@ -16,7 +16,15 @@
   margin: 0 0 0.6rem 0;
 }
 
-.c-stat-card.blue { background: #eff6ff; }
-.c-stat-card.purple { background: var(--c-purple-bg); }
-.c-stat-card.green { background: var(--c-green-bg); }
-.c-stat-card.amber { background: var(--c-amber-bg); }
+.c-stat-card.blue {
+  background: #eff6ff;
+}
+.c-stat-card.purple {
+  background: var(--c-purple-bg);
+}
+.c-stat-card.green {
+  background: var(--c-green-bg);
+}
+.c-stat-card.amber {
+  background: var(--c-amber-bg);
+}

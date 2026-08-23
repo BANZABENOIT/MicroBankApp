@@ -12,7 +12,7 @@ use App\Models\Transaction;
 
 class CreditController
 {
-    // --- Côté client ---
+    //  Côté client 
 
     public function mine(): void
     {
@@ -70,7 +70,7 @@ class CreditController
             'success' => true,
             'loan' => [
                 'id' => $credit['id'],
-                'reference' => 'CR-' . str_pad((string) $credit['id'], 4, '0', STR_PAD_LEFT),
+                'reference' => 'FA-CR-' . str_pad((string) $credit['id'], 5, '0', STR_PAD_LEFT),
                 'status' => $this->mapStatus($credit['statut']),
                 'amount' => (float) ($credit['montant_accorde'] ?? $credit['montant_demande']),
                 'durationMonths' => (int) $credit['duree_mois'],
@@ -124,7 +124,7 @@ class CreditController
         Security::jsonResponse(['success' => true, 'message' => 'Remboursement effectué.']);
     }
 
-    // --- Côté admin ---
+    //  Côté admin 
 
     public function all(): void
     {
@@ -180,16 +180,16 @@ class CreditController
     {
         return [
             'id' => $c['id'],
-            'reference' => 'CR-' . str_pad((string) $c['id'], 4, '0', STR_PAD_LEFT),
+            'reference' => 'FA-CR-' . str_pad((string) $c['id'], 5, '0', STR_PAD_LEFT),
             'status' => $this->mapStatus($c['statut']),
-            'amount' => (float) ($c['montant_accorde'] ?? $c['montant_demande']),
+            'amount' => (float) ($c['montant_accorde']),
+            'amountRequest' => (float) ($c['montant_demande']),
             'durationMonths' => (int) $c['duree_mois'],
             'createdAt' => date('d/m/Y', strtotime($c['date_demande'])),
             'amountPaid' => Credit::totalRembourse((int) $c['id']),
         ];
     }
 
-    // Fait correspondre les statuts base de données aux statuts attendus par le front
     private function mapStatus(string $dbStatus): string
     {
         return match ($dbStatus) {
