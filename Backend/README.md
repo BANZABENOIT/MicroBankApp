@@ -1,77 +1,92 @@
-# FinAccess Backend (PHP, Programmation Orientée Objet)
+# FinAccess Backend
 
-## Présentation
+API REST PHP orientée objet, sans framework, utilisée par l'espace client et l'espace d'administration de FinAccess.
 
-Backend de l'application FinAccess, développé en PHP orienté objet sans framework. Il expose une API REST unique, utilisée à la fois par l'application client et par l'interface d'administration ; le comportement de certaines routes s'adapte selon le rôle (client ou administrateur) porté par le jeton de connexion.
+## Responsabilités
 
-## Architecture
+- authentification des clients et des administrateurs ;
+- gestion des profils, comptes, épargnes, crédits et remboursements ;
+- suivi des transactions financières ;
+- opérations bancaires réservées à l'administration ;
+- contrôle des droits selon le rôle associé au jeton d'authentification.
 
-```
+## Organisation
+
+```text
 Backend/
 ├── app/
-│   ├── Core/            Router, connexion base de données, sécurité, authentification
-│   ├── Controllers/      Logique métier par ressource (authentification, crédits, comptes, épargne, transactions, remboursements, administration)
-│   └── Models/            Accès aux données (une classe par table)
-├── config/
-│   └── config.php         Paramètres de connexion et de sécurité
-├── database/
-│   └── schema.sql          Script de création de la base de données
-├── routes/
-│   └── api.php              Déclaration des routes de l'API
-├── public/
-│   ├── index.php             Point d'entrée de l'application
-│   └── .htaccess
-├── autoload.php              Chargement automatique des classes
-└── create_admin.php          Script de création d'un compte administrateur
+│   ├── Core/           Routage, base de données, authentification et sécurité
+│   ├── Controllers/    Traitement des requêtes par domaine métier
+│   └── Models/         Accès aux données
+├── config/config.php   Configuration de la base, des jetons et du CORS
+├── database/schema.sql Schéma MySQL
+├── routes/api.php      Déclaration des routes REST
+├── public/index.php    Point d'entrée HTTP
+├── autoload.php        Chargement automatique des classes
+└── create_admin.php    Création d'un compte administrateur
 ```
 
-## Base de données
+## Prérequis
 
-Le schéma (`database/schema.sql`) comprend les tables suivantes :
-
-| Table | Rôle |
-| `utilisateurs` | Comptes de connexion (rôle client ou administrateur), avec gestion du blocage après tentatives échouées |
-| `clients` | Profil métier du client, lié à un utilisateur |
-| `comptes` | Comptes bancaires des clients |
-| `epargnes` | Opérations de dépôt et de retrait d'épargne |
-| `credits` | Demandes et contrats de crédit |
-| `remboursements` | Paiements effectués sur un crédit |
-| `transactions` | Journal centralisé de tous les mouvements financiers |
-| `api_tokens` | Jetons de session pour l'authentification |
+- PHP 8 ou version supérieure ;
+- Apache avec `mod_rewrite` activé ;
+- MySQL ou MariaDB ;
+- accès à la commande `php` depuis un terminal.
 
 ## Installation
 
-1. Créer la base de données à partir de `database/schema.sql`.
-2. Renseigner les identifiants de connexion dans `config/config.php`.
-3. Servir le dossier `public/` via Apache (`mod_rewrite` activé).
-4. Créer un compte administrateur :
+1. Créer la base de données en important `database/schema.sql` :
+
+   ```bash
+   mysql -u root -p < database/schema.sql
+   ```
+
+2. Vérifier les paramètres de connexion dans `config/config.php`. Par défaut, l'application utilise l'hôte `127.0.0.1`, l'utilisateur `root`, un mot de passe vide et la base `FinAccess`.
+3. Si nécessaire, définir les variables d'environnement `FINACCESS_DB_HOST`, `FINACCESS_DB_NAME`, `FINACCESS_DB_USER`, `FINACCESS_DB_PASS` et `FINACCESS_CORS_ORIGINS`.
+4. Configurer Apache pour que le dossier `public/` soit le point d'entrée de l'API.
+5. Depuis le dossier `Backend`, créer le premier administrateur :
+
    ```bash
    php create_admin.php
    ```
 
-## Points d'entrée de l'API
+## API
 
-| Domaine | Exemples de routes |
-| Authentification | `POST /api/register`, `POST /api/login` |
-| Profil | `GET /api/profile`, `PUT /api/profile` |
-| Tableau de bord | `GET /api/dashboard` |
-| Épargne | `GET /api/savings`, `POST /api/savings/deposit`, `POST /api/savings/withdraw` |
-| Comptes | `GET /api/accounts/mine`, `GET /api/accounts` |
-| Crédits | `GET /api/loans/mine`, `POST /api/loans`, `GET /api/loans/{id}`, `POST /api/loans/{id}/repay`, `POST /api/loans/{id}/approve`, `POST /api/loans/{id}/reject` |
-| Remboursements | `POST /api/repayments` |
-| Transactions | `GET /api/transactions` |
-| Administration | `GET /api/clients` |
+Toutes les routes sont préfixées par `/api`.
 
-## Sécurité mise en œuvre
+| Domaine                   | Routes principales                                                                                                                |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Authentification          | `POST /register`, `POST /login`, `POST /admin/login`                                                                              |
+| Profil et tableau de bord | `GET /profile`, `PUT /profile`, `GET /dashboard`                                                                                  |
+| Épargne                   | `GET /savings`, `POST /savings/deposit`, `POST /savings/withdraw`                                                                 |
+| Comptes                   | `GET /accounts/mine`, `GET /accounts`                                                                                             |
+| Crédits client            | `GET /loans/mine`, `POST /loans`, `GET /loans/{id}`, `POST /loans/{id}/repay`                                                     |
+| Crédits administrateur    | `GET /loans`, `POST /loans/{id}/approve`, `POST /loans/{id}/reject`                                                               |
+| Remboursements            | `POST /repayments`                                                                                                                |
+| Transactions              | `GET /transactions`                                                                                                               |
+| Administration            | `GET /clients`, `POST /clients`, `PUT /clients/{id}/status`, `GET /admin/dashboard`                                               |
+| Banque                    | `GET /admin/bank`, `GET /admin/bank/history`, `POST /admin/bank/deposit`, `POST /admin/bank/withdraw`, `POST /admin/bank/capital` |
 
-Le développement s'appuie sur les recommandations OWASP Top 10 :
+Les routes protégées attendent un jeton dans l'en-tête suivant :
 
-- **Contrôle d'accès** : vérification systématique du jeton et du rôle sur les routes sensibles ; un client ne peut consulter ou modifier que ses propres données.
-- **Cryptographie** : mots de passe hachés (bcrypt), jetons de session générés de manière cryptographiquement aléatoire.
-- **Prévention des injections** : requêtes préparées PDO sur l'ensemble des accès à la base de données ; échappement systématique des entrées affichées.
-- **Authentification renforcée** : blocage automatique d'un compte après plusieurs tentatives de connexion échouées, avec déblocage temporisé ; jetons de session à durée de vie limitée.
-- **Configuration sécurisée** : liste blanche d'origines autorisées (CORS), en-têtes de sécurité HTTP, désactivation de l'affichage des erreurs en environnement de production.
+```http
+Authorization: Bearer <token>
+```
 
-## Notes
+## Base de données
 
-L'échéancier de remboursement affiché côté client est calculé à la volée (mensualités réparties sur la durée du crédit) et n'est pas stocké ligne par ligne en base de données.
+Le fichier `database/schema.sql` crée notamment les tables `utilisateurs`, `api_tokens`, `clients`, `comptes`, `epargnes`, `credits`, `remboursements`, `transactions`, `banque_compte` et `banque_mouvements`.
+
+## Sécurité
+
+- mots de passe hachés avec l'API de hachage PHP ;
+- jetons de session aléatoires avec durée de validité configurable ;
+- requêtes préparées via PDO ;
+- contrôle d'accès par authentification et rôle ;
+- limitation des tentatives de connexion et blocage temporaire ;
+- liste blanche CORS configurable ;
+- validation des entrées et réponses JSON communes.
+
+## Remarque
+
+L'échéancier de remboursement est calculé côté application à partir des informations du crédit. Les remboursements réellement enregistrés sont conservés dans la table `remboursements` et les mouvements associés dans `transactions`.
