@@ -37,3 +37,20 @@
   font-size: 0.9rem;
   margin-top: 0.15rem;
 }
+
+@media (max-width: 600px) {
+  .savings-balance-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .savings-balance-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .savings-history-list li {
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+}

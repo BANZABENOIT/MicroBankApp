@@ -14,6 +14,15 @@
 .table-toolbar-actions {
   display: flex;
   gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.admin-card:has(.admin-table) {
+  overflow-x: auto;
+}
+
+.admin-table {
+  min-width: 680px;
 }
 
 .icon-btn {
@@ -43,4 +52,66 @@
   margin-top: 1rem;
   font-size: 0.85rem;
   color: var(--admin-text-muted);
+}
+
+.client-create-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.client-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.client-create-form label {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--admin-text-muted);
+  font-size: 0.82rem;
+}
+
+.client-create-form input,
+.client-create-form select {
+  min-height: 2.4rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 7px;
+}
+
+.client-create-form > .admin-btn {
+  justify-content: center;
+}
+
+.client-detail p {
+  margin: 0.65rem 0;
+}
+
+@media (max-width: 600px) {
+  .admin-search {
+    min-width: 100%;
+  }
+
+  .table-toolbar-actions {
+    width: 100%;
+  }
+
+  .table-toolbar-actions .admin-btn {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .table-pagination {
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .table-pagination .admin-btn {
+    padding-inline: 0.65rem;
+  }
+
+  .client-form-grid {
+    grid-template-columns: 1fr;
+  }
 }

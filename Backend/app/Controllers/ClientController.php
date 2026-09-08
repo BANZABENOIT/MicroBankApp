@@ -9,7 +9,6 @@ use App\Models\Compte;
 use App\Models\Credit;
 use App\Models\Epargne;
 use App\Models\Transaction;
-use App\Models\Utilisateur;
 
 class ClientController
 {
@@ -29,7 +28,7 @@ class ClientController
                 'email' => $client['email'],
                 'phone' => $client['telephone'],
                 'reference' => $client['numero_client'],
-                'address' => $client['adress'],
+                'address' => $client['adresse'],
                 'createdAt' => date('d/m/Y', strtotime($client['date_creation'])),
             ],
         ]);
@@ -44,12 +43,25 @@ class ClientController
         $adresse = Security::sanitizeString($data['address'] ?? $data['adresse'] ?? '') ?: null;
         Client::updateProfile((int) $client['id'], $adresse);
 
-        Security::jsonResponse(['success' => true, 'message' => 'Profil mis à jour.']);
+        $updated = Client::findById((int) $client['id']);
+
+        Security::jsonResponse([
+            'success' => true,
+            'message' => 'Profil mis à jour.',
+            'profile' => [
+                'name' => trim($updated['prenom'] . ' ' . $updated['nom']),
+                'email' => $updated['email'],
+                'phone' => $updated['telephone'],
+                'reference' => $updated['numero_client'],
+                'address' => $updated['adresse'],
+                'createdAt' => date('d/m/Y', strtotime($updated['date_creation'])),
+            ],
+        ]);
     }
 
     public function dashboard(): void
     {
-        
+
         $auth = Auth::requireAuth();
 
         if ($auth['role'] === 'admin') {

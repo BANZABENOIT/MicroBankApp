@@ -3,8 +3,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.2rem 2rem;
-  background: white;
-  border-bottom: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(203, 213, 225, 0.8);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  position: sticky;
+  top: 0;
+  z-index: 5;
 }
 
 .topbar h1 {
@@ -44,8 +49,8 @@
 }
 
 .topbar-icon-btn {
-  background: #f3f4f6;
-  border: none;
+  background: #f4f7fa;
+  border: 1px solid var(--admin-border);
   width: 36px;
   height: 36px;
   border-radius: 8px;
@@ -54,6 +59,16 @@
   justify-content: center;
   cursor: pointer;
   color: #374151;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.topbar-icon-btn:hover {
+  background: #e8f2f9;
+  color: var(--admin-accent);
+  transform: translateY(-1px);
 }
 
 .topbar-profile {
@@ -86,4 +101,31 @@
 .topbar-profile-role {
   font-size: 0.75rem;
   color: #6b7280;
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1rem;
+  }
+
+  .topbar-actions {
+    gap: 0.4rem;
+  }
+
+  .topbar-search,
+  .topbar-profile {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 761px) {
+  .topbar {
+    padding: 1rem 1.25rem;
+  }
+
+  .topbar-search input {
+    width: 120px;
+  }
 }

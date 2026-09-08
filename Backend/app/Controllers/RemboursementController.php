@@ -4,16 +4,14 @@ namespace App\Controllers;
 
 use App\Core\Auth;
 use App\Core\Security;
-use App\Models\Compte;
+use App\Models\BanqueCompte;
 use App\Models\Credit;
-use App\Models\Remboursement;
-use App\Models\Transaction;
 
 class RemboursementController
 {
     public function record(): void
     {
-        Auth::requireAdmin();
+        $auth = Auth::requireAdmin();
         $data = Security::getJsonInput();
 
         $creditId = $data['creditId'] ?? null;
@@ -36,18 +34,17 @@ class RemboursementController
             default => 'autre',
         };
 
-        Remboursement::create((int) $creditId, (float) $amount, $paymentDate, $modeDb);
-
-        
-        $compte = Compte::findById((int) $credit['compte_id']);
-        $soldeAvant = (float) $compte['solde'];
-        Transaction::record((int) $compte['id'], 'remboursement', (float) $amount, $soldeAvant, $soldeAvant, 'Remboursement enregistré par l\'admin');
-
-        $totalPaid = Credit::totalRembourse((int) $creditId);
-        if ($totalPaid >= (float) $credit['montant_accorde']) {
-            Credit::updateStatus((int) $creditId, 'rembourse');
-        } else {
-            Credit::updateStatus((int) $creditId, 'en_cours');
+        try {
+            BanqueCompte::recordRepayment(
+                (int) $creditId,
+                (int) $credit['compte_id'],
+                (float) $amount,
+                $paymentDate,
+                $modeDb,
+                (int) $auth['id']
+            );
+        } catch (\Throwable $e) {
+            Security::jsonResponse(['success' => false, 'message' => $e->getMessage()], 422);
         }
 
         Security::jsonResponse(['success' => true, 'message' => 'Remboursement enregistré.']);

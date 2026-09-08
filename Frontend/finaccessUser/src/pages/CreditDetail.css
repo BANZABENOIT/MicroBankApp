@@ -23,6 +23,18 @@
   margin-bottom: 1.2rem;
 }
 
+@media (max-width: 760px) {
+  .detail-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .detail-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .detail-info-grid p {
   margin: 0.2rem 0 0 0;
   font-weight: 600;
@@ -40,4 +52,30 @@
 
 .c-main .c-card h3 {
   margin: 0 0 1rem 0;
+}
+
+.repayment-action {
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+  margin-top: 1.2rem;
+}
+
+.repayment-action label {
+  color: var(--c-text-muted);
+  font-size: 0.82rem;
+  margin-bottom: 0.3rem;
+}
+
+.repayment-action input {
+  min-height: 2.5rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--c-border);
+  border-radius: 7px;
+}
+
+@media (max-width: 600px) {
+  .repayment-action {
+    max-width: none;
+  }
 }

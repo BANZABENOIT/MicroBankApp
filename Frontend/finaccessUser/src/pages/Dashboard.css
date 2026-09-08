@@ -18,6 +18,23 @@
   }
 }
 
+@media (max-width: 600px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .dashboard-grid {
+    gap: 0.9rem;
+  }
+
+  .cta-card {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+}
+
 .dashboard-grid h3 {
   margin: 0 0 1rem 0;
   font-size: 1rem;
@@ -72,7 +89,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #eff6ff;
+  background: linear-gradient(135deg, #e7f2f8, #f7fbfd);
+  border: 1px solid var(--c-border);
 }
 
 .cta-card p {

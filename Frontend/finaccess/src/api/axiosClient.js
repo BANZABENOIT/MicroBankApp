@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API_BASE_URL =
-  "http://localhost/FinAccessTp/FinAccess/Backend/public/api";
+  import.meta.env.VITE_API_URL ||
+  "http://localhost/ESPOIR_KIPANZA_BENOIT_24100505_TP/FinAccess_TP_OWASP/Backend/public/api";
 
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,
@@ -30,7 +31,7 @@ axiosClient.interceptors.response.use(
       window.location.href = "/login";
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosClient;

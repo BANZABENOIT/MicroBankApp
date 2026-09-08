@@ -8,6 +8,7 @@ import {
   FiList,
   FiBarChart2,
   FiSettings,
+  FiDollarSign,
 } from "react-icons/fi";
 import "./Sidebar.css";
 
@@ -20,6 +21,7 @@ const links = [
   { to: "/transactions", label: "Transactions", icon: <FiList /> },
   { to: "/reports", label: "Rapports", icon: <FiBarChart2 /> },
   { to: "/settings", label: "Paramètres", icon: <FiSettings /> },
+  { to: "/bank", label: "Banque", icon: <FiDollarSign /> },
 ];
 
 function Sidebar({ user }) {
@@ -36,7 +38,9 @@ function Sidebar({ user }) {
           <NavLink
             key={link.to}
             to={link.to}
-            className={({ isActive }) => "sidebar-link" + (isActive ? " active" : "")}
+            className={({ isActive }) =>
+              "sidebar-link" + (isActive ? " active" : "")
+            }
           >
             {link.icon}
             <span>{link.label}</span>
@@ -45,9 +49,13 @@ function Sidebar({ user }) {
       </nav>
 
       <div className="sidebar-user">
-        <div className="sidebar-user-avatar">{user?.name?.charAt(0) || "A"}</div>
+        <div className="sidebar-user-avatar">
+          {user?.name?.charAt(0) || "A"}
+        </div>
         <div>
-          <div className="sidebar-user-name">{user?.name || "Admin FinAccess"}</div>
+          <div className="sidebar-user-name">
+            {user?.name || "Admin FinAccess"}
+          </div>
           <div className="sidebar-user-role">Administrateur</div>
         </div>
       </div>

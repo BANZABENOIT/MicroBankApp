@@ -54,6 +54,7 @@ class AuthController
 
         $pdo = Database::connect();
         $pdo->beginTransaction();
+        $utilisateurId = 0;
 
         try {
             $hash = Security::hashPassword($password);
@@ -97,11 +98,7 @@ class AuthController
             Security::jsonResponse(['success' => false, 'message' => 'Trop de tentatives. Réessaie dans quelques minutes.'], 429);
         }
 
-        $config = [
-            'token_ttl_hours' => 24,
-            'max_login_attempts' => 3,
-            'lockout_minutes' => 15,
-        ];
+        $config = require __DIR__ . '/../../config/config.php';
         $user = Utilisateur::findByEmail($email);
 
         if (!$user) {
@@ -143,7 +140,7 @@ class AuthController
 
         $pdo = Database::connect();
         $stmt = $pdo->prepare(
-            'INSERT INTO api_tokens (user_id, token, expires_at) VALUES (?, ?, ?)'
+            'INSERT INTO api_tokens (utilisateur_id, token, expires_at) VALUES (?, ?, ?)'
         );
 
         $stmt->execute([$user['id'], $token, $expiresAt]);
@@ -180,11 +177,7 @@ class AuthController
             Security::jsonResponse(['success' => false, 'message' => 'Trop de tentatives. Réessaie dans quelques minutes.'], 429);
         }
 
-        $config = [
-            'token_ttl_hours' => 24,
-            'max_login_attempts' => 3,
-            'lockout_minutes' => 15,
-        ];
+        $config = require __DIR__ . '/../../config/config.php';
         $user = Utilisateur::findByEmail($email);
 
         if (!$user) {
@@ -226,7 +219,7 @@ class AuthController
 
         $pdo = Database::connect();
         $stmt = $pdo->prepare(
-            'INSERT INTO api_tokens (user_id, token, expires_at) VALUES (?, ?, ?)'
+            'INSERT INTO api_tokens (utilisateur_id, token, expires_at) VALUES (?, ?, ?)'
         );
 
         $stmt->execute([$user['id'], $token, $expiresAt]);

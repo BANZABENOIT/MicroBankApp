@@ -26,20 +26,22 @@ class EpargneController
             'history' => array_map(fn($h) => [
                 'id' => $h['id'],
                 'date' => date('d/m/Y', strtotime($h['date_operation'])),
-                'type' => $h['type'] === 'dépôt' ? 'deposit' : 'withdrawal',
-                'amount' => $h['type'] === 'dépôt' ? (float) $h['montant'] : -(float) $h['montant'],
+                'type' => $h['type'] === 'depot' ? 'deposit' : 'withdrawal',
+                'amount' => $h['type'] === 'depot' ? (float) $h['montant'] : -(float) $h['montant'],
             ], $history),
         ]);
     }
 
     public function deposit(): void
     {
-        $this->operate('dépôt');
+        Auth::requireAuth();
+        Security::jsonResponse(['success' => false, 'message' => 'Les dépôts sont effectués uniquement par un admin ou un agent.'], 403);
     }
 
     public function withdraw(): void
     {
-        $this->operate('retrait');
+        Auth::requireAuth();
+        Security::jsonResponse(['success' => false, 'message' => 'Les retraits sont effectués uniquement par un admin ou un agent.'], 403);
     }
 
     private function operate(string $type): void

@@ -23,7 +23,7 @@ class Epargne
     {
         $pdo = Database::connect();
         $stmt = $pdo->prepare(
-            "SELECT COALESCE(SUM(CASE WHEN type = 'dépôt' THEN montant ELSE -montant END), 0)
+            "SELECT COALESCE(SUM(CASE WHEN type = 'depot' THEN montant ELSE -montant END), 0)
              FROM epargnes WHERE client_id = ?"
         );
         $stmt->execute([$clientId]);

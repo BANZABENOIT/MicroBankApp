@@ -9,6 +9,7 @@ class Auth
     {
         $header = self::getAuthorizationHeader();
 
+        $matches = [];
         if (!$header || !preg_match('/Bearer\s+(.+)/i', $header, $matches)) {
             Security::jsonResponse(['success' => false, 'message' => 'Authentification requise.'], 401);
         }
@@ -19,7 +20,7 @@ class Auth
         $stmt = $pdo->prepare(
             'SELECT u.id, u.role, u.statut
              FROM api_tokens t
-             JOIN utilisateurs u ON u.id = t.user_id
+             JOIN utilisateurs u ON u.id = t.utilisateur_id
              WHERE t.token = ? AND t.expires_at > NOW()'
         );
         $stmt->execute([$token]);
@@ -36,7 +37,7 @@ class Auth
         return ['id' => (int) $row['id'], 'role' => $row['role']];
     }
 
-    
+
     public static function requireAdmin(): array
     {
         $user = self::requireAuth();

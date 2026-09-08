@@ -5,17 +5,29 @@ function DonutChart({ segments, centerValue, centerLabel }) {
   const radius = 60;
   const circumference = 2 * Math.PI * radius;
 
-  let offsetAcc = 0;
-
   return (
     <div className="donut-wrapper">
       <svg viewBox="0 0 160 160" className="donut-svg">
-        <circle cx="80" cy="80" r={radius} fill="none" stroke="#f1f5f9" strokeWidth="16" />
-        {segments.map((s) => {
+        <circle
+          cx="80"
+          cy="80"
+          r={radius}
+          fill="none"
+          stroke="#f1f5f9"
+          strokeWidth="16"
+        />
+        {segments.map((s, index) => {
           const fraction = s.value / total;
           const dash = fraction * circumference;
           const gap = circumference - dash;
-          const circle = (
+          const offset = segments
+            .slice(0, index)
+            .reduce(
+              (sum, segment) => sum + (segment.value / total) * circumference,
+              0,
+            );
+
+          return (
             <circle
               key={s.label}
               cx="80"
@@ -25,13 +37,11 @@ function DonutChart({ segments, centerValue, centerLabel }) {
               stroke={s.color}
               strokeWidth="16"
               strokeDasharray={`${dash} ${gap}`}
-              strokeDashoffset={-offsetAcc}
+              strokeDashoffset={-offset}
               transform="rotate(-90 80 80)"
               strokeLinecap="round"
             />
           );
-          offsetAcc += dash;
-          return circle;
         })}
         <text x="80" y="76" textAnchor="middle" className="donut-center-value">
           {centerValue}
@@ -44,7 +54,10 @@ function DonutChart({ segments, centerValue, centerLabel }) {
       <div className="donut-legend">
         {segments.map((s) => (
           <div key={s.label} className="donut-legend-item">
-            <span className="donut-dot" style={{ backgroundColor: s.color }}></span>
+            <span
+              className="donut-dot"
+              style={{ backgroundColor: s.color }}
+            ></span>
             {s.label} <strong>{s.value}</strong>
           </div>
         ))}

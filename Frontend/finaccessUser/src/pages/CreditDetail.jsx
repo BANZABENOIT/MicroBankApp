@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -13,15 +13,27 @@ function CreditDetail() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { selected: credit, loading } = useSelector((state) => state.credits);
+  const [repaymentAmount, setRepaymentAmount] = useState("");
 
   useEffect(() => {
     dispatch(fetchCreditDetail(id));
   }, [dispatch, id]);
 
   const handleRepay = async () => {
-    const result = await dispatch(makeRepayment({ creditId: id }));
+    const amount = Number(repaymentAmount);
+    const remaining = Math.max(
+      0,
+      Number(credit?.amount || 0) - Number(credit?.amountPaid || 0),
+    );
+    if (!Number.isFinite(amount) || amount <= 0 || amount > remaining) {
+      toast.error("Saisis un montant valide, inférieur ou égal au reste dû.");
+      return;
+    }
+
+    const result = await dispatch(makeRepayment({ creditId: id, amount }));
     if (makeRepayment.fulfilled.match(result)) {
       toast.success("Remboursement effectué !");
+      setRepaymentAmount("");
       dispatch(fetchCreditDetail(id));
     } else {
       toast.error(result.payload);
@@ -37,7 +49,10 @@ function CreditDetail() {
       <div className="c-content">
         <Topbar title="Détails du crédit" subtitle="" />
         <main className="c-main">
-          <button className="c-link back-link" onClick={() => navigate("/credits")}>
+          <button
+            className="c-link back-link"
+            onClick={() => navigate("/credits")}
+          >
             <FiArrowLeft /> Retour
           </button>
 
@@ -48,7 +63,9 @@ function CreditDetail() {
               <div className="c-card">
                 <div className="detail-header">
                   <h2>{credit.reference}</h2>
-                  <span className={`c-badge status-${credit.status}`}>{credit.status}</span>
+                  <span className={`c-badge status-${credit.status}`}>
+                    {credit.status}
+                  </span>
                 </div>
 
                 <div className="detail-info-grid">
@@ -79,10 +96,14 @@ function CreditDetail() {
                 </div>
 
                 <div className="progress-bar">
-                  <div className="progress-fill" style={{ width: `${percent}%` }} />
+                  <div
+                    className="progress-fill"
+                    style={{ width: `${percent}%` }}
+                  />
                 </div>
                 <p className="progress-label">
-                  Déjà remboursé : {paid.toLocaleString("fr-FR")} BIF ({percent}%)
+                  Déjà remboursé : {paid.toLocaleString("fr-FR")} BIF ({percent}
+                  %)
                 </p>
               </div>
 
@@ -114,9 +135,31 @@ function CreditDetail() {
                 </table>
 
                 {["approved", "repaying"].includes(credit.status) && (
-                  <button className="c-btn c-btn-primary" style={{ marginTop: "1.2rem" }} onClick={handleRepay}>
-                    Effectuer un remboursement
-                  </button>
+                  <div className="repayment-action">
+                    <label htmlFor="repayment-amount">
+                      Montant à rembourser (BIF)
+                    </label>
+                    <input
+                      id="repayment-amount"
+                      type="number"
+                      min="0.01"
+                      max={Math.max(0, credit.amount - paid)}
+                      step="0.01"
+                      value={repaymentAmount}
+                      onChange={(event) =>
+                        setRepaymentAmount(event.target.value)
+                      }
+                      placeholder={`Reste : ${(credit.amount - paid).toLocaleString("fr-FR")} BIF`}
+                    />
+                    <button
+                      className="c-btn c-btn-primary"
+                      style={{ marginTop: "1.2rem" }}
+                      onClick={handleRepay}
+                      disabled={loading}
+                    >
+                      {loading ? "Traitement..." : "Effectuer un remboursement"}
+                    </button>
+                  </div>
                 )}
               </div>
             </>

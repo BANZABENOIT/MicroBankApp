@@ -10,6 +10,17 @@
   }
 }
 
+@media (max-width: 600px) {
+  .credit-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .credit-item {
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}
+
 .credit-list {
   display: flex;
   flex-direction: column;

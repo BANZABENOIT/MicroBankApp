@@ -5,14 +5,14 @@ export const fetchDashboard = createAsyncThunk(
   "dashboard/fetchDashboard",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosClient.get("/dashboard");
+      const response = await axiosClient.get("/admin/dashboard");
       return response.data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Erreur de chargement."
+        error.response?.data?.message || "Erreur de chargement.",
       );
     }
-  }
+  },
 );
 
 const dashboardSlice = createSlice({

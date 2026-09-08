@@ -40,7 +40,7 @@ CREATE TABLE comptes (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     client_id INT UNSIGNED NOT NULL,
     numero_compte VARCHAR(30) NOT NULL UNIQUE,
-    solde DECIMAL(15,2) NOT NULL DEFAULT 0.00,
+    solde DECIMAL(17,2) NOT NULL DEFAULT 0.00,
     devise CHAR(3) NOT NULL DEFAULT 'BIF',
     statut ENUM('actif','inactif') NOT NULL DEFAULT 'actif',
     date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -105,17 +105,19 @@ CREATE TABLE transactions (
 
 CREATE TABLE banque_compte (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    solde DECIMAL(5,2) NOT NULL DEFAULT 0,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    solde DECIMAL(15,2) NOT NULL DEFAULT 0.00,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 CREATE TABLE banque_mouvements (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    type ENUM('depot', 'remboursement', 'capital_initial') NOT NULL,
+    type ENUM('depot', 'retrait', 'decaissement_credit', 'remboursement', 'capital_initial') NOT NULL,
     montant DECIMAL(15,2) NOT NULL,
+    frais DECIMAL(15,2) NOT NULL DEFAULT 0.00,
     client_id INT UNSIGNED NULL,
     credit_id INT UNSIGNED NULL,
-    effectue_par INT NULL COMMENT 'id de l\'agent ou admin qui a réalisé l\'opération',
+    effectue_par INT UNSIGNED NULL COMMENT 'id de l\'agent ou admin qui a réalisé l\'opération',
+    reference_operation VARCHAR(40) NOT NULL UNIQUE,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (client_id) REFERENCES clients(id),
     FOREIGN KEY (credit_id) REFERENCES credits(id)

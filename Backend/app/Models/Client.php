@@ -30,7 +30,7 @@ class Client
     {
         $pdo = Database::connect();
         $stmt = $pdo->prepare(
-            'INSERT INTO clients (utilisateur_id, numero_client, adress, date_naissance, sexe) VALUES (?, ?, ?, ?, ?)'
+            'INSERT INTO clients (utilisateur_id, numero_client, adresse, date_naissance, sexe) VALUES (?, ?, ?, ?, ?)'
         );
         $stmt->execute([$utilisateurId, $numeroClient, $adresse, $dateNaissance, $sexe]);
         return (int) $pdo->lastInsertId();
@@ -58,7 +58,14 @@ class Client
     public static function updateProfile(int $clientId, ?string $adresse): void
     {
         $pdo = Database::connect();
-        $stmt = $pdo->prepare('UPDATE clients SET adress = ? WHERE id = ?');
+        $stmt = $pdo->prepare('UPDATE clients SET adresse = ? WHERE id = ?');
         $stmt->execute([$adresse, $clientId]);
+    }
+
+    public static function updateUserStatus(int $userId, string $status): void
+    {
+        $pdo = Database::connect();
+        $stmt = $pdo->prepare('UPDATE utilisateurs SET statut = ?, bloque_jusqua = NULL WHERE id = ?');
+        $stmt->execute([$status, $userId]);
     }
 }

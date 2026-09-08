@@ -1,8 +1,17 @@
 .c-stat-card {
   background: white;
-  border-radius: 14px;
+  border: 1px solid var(--c-border);
+  border-radius: var(--c-radius);
   padding: 1.2rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--c-shadow);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.c-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(28, 55, 77, 0.12);
 }
 
 .c-stat-label {
@@ -17,7 +26,7 @@
 }
 
 .c-stat-card.blue {
-  background: #eff6ff;
+  background: #edf6fb;
 }
 .c-stat-card.purple {
   background: var(--c-purple-bg);

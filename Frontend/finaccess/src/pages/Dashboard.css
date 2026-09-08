@@ -65,3 +65,24 @@
   white-space: nowrap;
   margin-left: 1rem;
 }
+
+@media (max-width: 600px) {
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .dashboard-grid {
+    gap: 0.9rem;
+  }
+
+  .activity-list li {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .activity-time {
+    margin-left: 0;
+  }
+}

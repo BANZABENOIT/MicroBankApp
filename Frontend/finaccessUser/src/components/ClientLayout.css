@@ -1,6 +1,7 @@
 .c-layout {
   display: flex;
   min-height: 100vh;
+  background: transparent;
 }
 
 .c-content {
@@ -13,4 +14,13 @@
 .c-main {
   padding: 1.5rem 2rem;
   flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+  .c-layout {
+    display: block;
+  }
 }

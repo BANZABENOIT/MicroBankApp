@@ -7,8 +7,8 @@ use App\Core\Security;
 use App\Models\Client;
 use App\Models\Compte;
 use App\Models\Credit;
+use App\Models\BanqueCompte;
 use App\Models\Remboursement;
-use App\Models\Transaction;
 
 class CreditController
 {
@@ -55,7 +55,7 @@ class CreditController
             Security::jsonResponse(['success' => false, 'message' => 'Crédit introuvable.'], 404);
         }
 
-        
+
         if ($auth['role'] !== 'admin') {
             $client = Client::findByUtilisateurId($auth['id']);
             if ((int) $credit['client_id'] !== (int) $client['id']) {
@@ -104,21 +104,17 @@ class CreditController
         }
         $amount = (float) $amount;
 
-        $compte = Compte::findById((int) $credit['compte_id']);
-        $soldeAvant = (float) $compte['solde'];
-
-        if (!Compte::debit((int) $compte['id'], $amount)) {
-            Security::jsonResponse(['success' => false, 'message' => 'Solde insuffisant sur ton compte.'], 422);
-        }
-
-        Remboursement::create((int) $id, $amount, date('Y-m-d'), 'autre');
-        Transaction::record((int) $compte['id'], 'remboursement', $amount, $soldeAvant, $soldeAvant - $amount, 'Remboursement crédit');
-
-        $totalPaid = Credit::totalRembourse((int) $id);
-        if ($totalPaid >= (float) $credit['montant_accorde']) {
-            Credit::updateStatus((int) $id, 'rembourse');
-        } else {
-            Credit::updateStatus((int) $id, 'en_cours');
+        try {
+            BanqueCompte::recordRepayment(
+                (int) $id,
+                (int) $credit['compte_id'],
+                $amount,
+                date('Y-m-d'),
+                'autre',
+                (int) $auth['id']
+            );
+        } catch (\Throwable $e) {
+            Security::jsonResponse(['success' => false, 'message' => $e->getMessage()], 422);
         }
 
         Security::jsonResponse(['success' => true, 'message' => 'Remboursement effectué.']);
@@ -145,7 +141,7 @@ class CreditController
 
     public function approve(string $id): void
     {
-        Auth::requireAdmin();
+        $auth = Auth::requireAdmin();
         $credit = Credit::findById((int) $id);
 
         if (!$credit || $credit['statut'] !== 'en_attente') {
@@ -156,13 +152,18 @@ class CreditController
         $montantAccorde = Security::isPositiveNumber($data['amount'] ?? null) ? (float) $data['amount'] : (float) $credit['montant_demande'];
         $taux = isset($data['interest_rate']) ? (float) $data['interest_rate'] : 5.0;
 
-        Credit::approve((int) $id, $montantAccorde, $taux);
-
-        
-        $compte = Compte::findById((int) $credit['compte_id']);
-        $soldeAvant = (float) $compte['solde'];
-        Compte::credit((int) $compte['id'], $montantAccorde);
-        Transaction::record((int) $compte['id'], 'credit', $montantAccorde, $soldeAvant, $soldeAvant + $montantAccorde, 'Prêt accordé');
+        try {
+            BanqueCompte::disburseCredit(
+                (int) $id,
+                (int) $credit['compte_id'],
+                $montantAccorde,
+                $taux,
+                (int) $credit['duree_mois'],
+                (int) $auth['id']
+            );
+        } catch (\Throwable $e) {
+            Security::jsonResponse(['success' => false, 'message' => $e->getMessage()], 422);
+        }
 
         Security::jsonResponse(['success' => true, 'message' => 'Demande approuvée et fonds décaissés.']);
     }
@@ -174,7 +175,7 @@ class CreditController
         Security::jsonResponse(['success' => true, 'message' => 'Demande refusée.']);
     }
 
-   
+
 
     private function formatSummary(array $c): array
     {

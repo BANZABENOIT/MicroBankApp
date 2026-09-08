@@ -54,9 +54,18 @@
   text-align: center;
 }
 
-.status-pending { background: var(--admin-amber-bg); color: var(--admin-amber-text); }
-.status-approved { background: var(--admin-green-bg); color: var(--admin-green-text); }
-.status-rejected { background: var(--admin-red-bg); color: var(--admin-red-text); }
+.status-pending {
+  background: var(--admin-amber-bg);
+  color: var(--admin-amber-text);
+}
+.status-approved {
+  background: var(--admin-green-bg);
+  color: var(--admin-green-text);
+}
+.status-rejected {
+  background: var(--admin-red-bg);
+  color: var(--admin-red-text);
+}
 
 .request-actions {
   display: flex;
@@ -64,8 +73,12 @@
   justify-content: flex-end;
 }
 
-.icon-approve:hover { color: var(--admin-green-text); }
-.icon-reject:hover { color: var(--admin-red-text); }
+.icon-approve:hover {
+  color: var(--admin-green-text);
+}
+.icon-reject:hover {
+  color: var(--admin-red-text);
+}
 
 .request-detail-grid {
   display: grid;
@@ -90,4 +103,54 @@
   display: flex;
   gap: 0.8rem;
   justify-content: flex-end;
+}
+
+@media (max-width: 1200px) and (min-width: 761px) {
+  .request-row {
+    grid-template-columns: 1.3fr 1fr 0.8fr 1fr auto;
+  }
+
+  .request-row > :nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .tabs-row {
+    overflow-x: auto;
+  }
+
+  .tab-btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .request-row {
+    grid-template-columns: 1fr auto;
+    gap: 0.7rem;
+  }
+
+  .request-row > :nth-child(2),
+  .request-row > :nth-child(3),
+  .request-row > :nth-child(4) {
+    display: none;
+  }
+
+  .request-status {
+    justify-self: start;
+  }
+
+  .request-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .request-detail-buttons {
+    flex-direction: column-reverse;
+  }
+
+  .request-detail-buttons .admin-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }

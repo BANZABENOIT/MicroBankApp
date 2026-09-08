@@ -29,6 +29,19 @@
   }
 }
 
+@media (max-width: 480px) {
+  .credit-row-top {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .credit-row-fields {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+}
+
 .request-label {
   color: var(--c-text-muted);
   font-size: 0.75rem;

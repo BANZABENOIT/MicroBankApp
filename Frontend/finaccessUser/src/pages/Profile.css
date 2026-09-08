@@ -74,3 +74,29 @@
   gap: 0.6rem;
   margin-top: 1rem;
 }
+
+@media (max-width: 600px) {
+  .profile-card {
+    align-items: center;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: none;
+  }
+
+  .profile-fields {
+    width: 100%;
+  }
+
+  .profile-edit-input {
+    max-width: none;
+  }
+
+  .profile-edit-actions {
+    flex-direction: column;
+  }
+
+  .profile-edit-actions .c-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

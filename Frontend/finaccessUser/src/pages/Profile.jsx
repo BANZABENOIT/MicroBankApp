@@ -16,10 +16,6 @@ function Profile() {
     dispatch(fetchProfile());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (data) setAddress(data.address || "");
-  }, [data]);
-
   const handlePhotoClick = () => {
     toast.info("La modification de la photo sera bientôt disponible.");
   };
@@ -39,7 +35,9 @@ function Profile() {
       <div className="c-card profile-card">
         <div className="profile-avatar-section">
           <div className="profile-avatar-wrapper">
-            <div className="profile-avatar">{data?.name?.slice(0, 2) || "U"}</div>
+            <div className="profile-avatar">
+              {data?.name?.slice(0, 2) || "U"}
+            </div>
             <button className="profile-avatar-edit" onClick={handlePhotoClick}>
               <FiCamera />
             </button>
@@ -88,7 +86,10 @@ function Profile() {
 
           {isEditing ? (
             <div className="profile-edit-actions">
-              <button className="c-btn c-btn-outline" onClick={() => setIsEditing(false)}>
+              <button
+                className="c-btn c-btn-outline"
+                onClick={() => setIsEditing(false)}
+              >
                 Annuler
               </button>
               <button className="c-btn c-btn-primary" onClick={handleSave}>
@@ -96,7 +97,14 @@ function Profile() {
               </button>
             </div>
           ) : (
-            <button className="c-btn c-btn-primary" style={{ marginTop: "1rem" }} onClick={() => setIsEditing(true)}>
+            <button
+              className="c-btn c-btn-primary"
+              style={{ marginTop: "1rem" }}
+              onClick={() => {
+                setAddress(data?.address || "");
+                setIsEditing(true);
+              }}
+            >
               Modifier mes informations
             </button>
           )}

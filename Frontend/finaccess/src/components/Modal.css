@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
   z-index: 50;
 }
 
@@ -15,6 +16,7 @@
   max-width: 480px;
   max-height: 85vh;
   overflow-y: auto;
+  max-height: calc(100vh - 2rem);
 }
 
 .modal-header {
@@ -43,4 +45,15 @@
 
 .modal-body {
   padding: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .modal-box {
+    border-radius: 10px;
+  }
+
+  .modal-header,
+  .modal-body {
+    padding: 1rem;
+  }
 }

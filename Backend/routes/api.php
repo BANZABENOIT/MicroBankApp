@@ -9,6 +9,7 @@ use App\Controllers\EpargneController;
 use App\Controllers\TransactionController;
 use App\Controllers\RemboursementController;
 use App\Controllers\AdminController;
+use App\Controllers\BanqueController;
 
 $router = new Router();
 
@@ -20,6 +21,7 @@ $epargneController = new EpargneController();
 $transactionController = new TransactionController();
 $remboursementController = new RemboursementController();
 $adminController = new AdminController();
+$banqueController = new BanqueController();
 
 //  Authentification 
 $router->post('/api/register', [$authController, 'register']);
@@ -59,5 +61,15 @@ $router->get('/api/transactions', [$transactionController, 'index']);
 
 //  Admin uniquement 
 $router->get('/api/clients', [$adminController, 'clients']);
+$router->post('/api/clients', [$adminController, 'createClient']);
+$router->put('/api/clients/{id}/status', [$adminController, 'updateClientStatus']);
+$router->get('/api/admin/dashboard', [$adminController, 'dashboard']);
+
+// Banque et opérations au guichet (admin uniquement)
+$router->get('/api/admin/bank', [$banqueController, 'summary']);
+$router->get('/api/admin/bank/history', [$banqueController, 'history']);
+$router->post('/api/admin/bank/deposit', [$banqueController, 'deposit']);
+$router->post('/api/admin/bank/withdraw', [$banqueController, 'withdraw']);
+$router->post('/api/admin/bank/capital', [$banqueController, 'capital']);
 
 return $router;
